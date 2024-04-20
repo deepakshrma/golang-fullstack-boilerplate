@@ -5,9 +5,16 @@ This is going to be awesome!!
 ## Project Structure
 
 ```
-|   cmd         := common commands, CLI Executables
-|   config      := app configurations
-|   controller  :=  
+|   cmd         :=  Common commands, CLI Executables
+|   config      :=  App configurations
+|   controller  :=
+|   env         :=  System environment configurations
+|   route       :=
+|   server      :=
+|   service     :=
+|   template    :=  App templates
+|   ui          :=
+|   util        :=  App utilities
 
 ```
 
