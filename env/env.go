@@ -10,6 +10,7 @@ import (
 )
 
 var APP_MODE = ""
+var APP_WD = "./"
 
 func GetEnvD(key string, def string) string {
 	env := os.Getenv(key)
@@ -22,6 +23,7 @@ func GetEnvD(key string, def string) string {
 func LoadEnvs() {
 	env := GetEnvD("APP_MODE", "")
 	APP_MODE = env
+	APP_WD, _ = os.Getwd()
 	envPath := "./env/application.env"
 	if !util.IsStringEmpty(env) {
 		envPath = fmt.Sprintf("./env/application.%s.env", env)

@@ -2,16 +2,18 @@ package main
 
 import (
 	"boilerplate/env"
+	"boilerplate/template"
 	"fmt"
 	"os"
 )
 
 func init() {
 	env.LoadEnvs()
+	template.LoadTemplates()
 }
 
 func main() {
 
-	fmt.Printf("\n\n####################################\n######### Version %s ############\n####################################\n\n", os.Getenv("APP_VERSION"))
+	template.Templates["version.tmpl"].Execute(os.Stdout, os.Getenv("APP_VERSION"))
 	fmt.Println("Hello World!")
 }
