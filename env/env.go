@@ -21,7 +21,7 @@ func GetEnvD(key string, def string) string {
 }
 
 func LoadEnvs() {
-	env := GetEnvD("AppMode", "")
+	env := GetEnvD("APP_MODE", "")
 	AppMode = env
 	AppWd, _ = os.Getwd()
 	envPath := "./env/application.env"
@@ -39,12 +39,14 @@ func LoadEnvs() {
 	}
 	for _, line := range strings.Split(strings.TrimSpace(string(envFile)), "\n") {
 		params := strings.Split(line, "=")
-		fmt.Println(params)
 		key := strings.TrimSpace(params[0])
 		if key == "" {
 			continue
 		}
 		val := strings.TrimSpace(params[1])
-		os.Setenv(key, val)
+		err := os.Setenv(key, val)
+		if err != nil {
+			slog.Warn("unable to set env ", "key", key)
+		}
 	}
 }

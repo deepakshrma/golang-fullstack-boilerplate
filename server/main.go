@@ -3,21 +3,20 @@ package main
 import (
 	"boilerplate/config"
 	"boilerplate/env"
-	"boilerplate/logger"
 	"boilerplate/template"
-	"fmt"
 	"os"
 )
 
 func init() {
 	env.LoadEnvs()
+	config.InitLogger()
 	template.LoadTemplates()
 	config.New()
 }
 
 func main() {
 	template.Templates["version.tmpl"].Execute(os.Stdout, os.Getenv("APP_VERSION"))
-	fmt.Println("Hello World!")
+	config.Logger.Info("Hello World!")
 	db := config.MemDatabase(config.AppConfiguration)
-	fmt.Println(db)
+	config.Logger.Info("created database connection", "db", db)
 }

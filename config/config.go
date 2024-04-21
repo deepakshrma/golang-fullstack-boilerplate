@@ -4,7 +4,6 @@ import (
 	"boilerplate/env"
 	"boilerplate/util"
 	"encoding/json"
-	"log/slog"
 	"os"
 	"path/filepath"
 )
@@ -28,8 +27,11 @@ func New() *Config {
 	}
 	configFileS, err := os.ReadFile(filepath.Join(env.AppWd, "config", configFileName))
 	if err != nil {
-		slog.Error("error while loading config file", "file", configFileName, err)
+		Logger.Error("error while loading config file", "file", configFileName, err)
 	}
-	json.Unmarshal(configFileS, AppConfiguration)
+	err = json.Unmarshal(configFileS, AppConfiguration)
+	if err != nil {
+		Logger.Error("error while parse config file", "file", configFileName, err)
+	}
 	return AppConfiguration
 }

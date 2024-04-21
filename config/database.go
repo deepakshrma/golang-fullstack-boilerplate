@@ -1,7 +1,5 @@
 package config
 
-import "fmt"
-
 type Database struct {
 }
 
@@ -11,6 +9,6 @@ func (db *Database) Query(query string) string {
 
 // MemDatabase is some mock database
 func MemDatabase(config *Config) *Database {
-	fmt.Println(config.DBHost)
+	Logger.Info(config.DBHost)
 	return &Database{}
 }

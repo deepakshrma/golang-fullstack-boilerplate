@@ -66,6 +66,11 @@ build:
 run: build
 	./bin/${BINARY_NAME}
 
+## run: run the  application
+.PHONY: run
+dev:
+	go run ${MAIN_PACKAGE_PATH}
+
 
 
 # ==================================================================================== #
