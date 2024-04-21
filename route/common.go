@@ -1,6 +1,8 @@
 package route
 
 import (
+	"boilerplate/config"
+	"boilerplate/controller"
 	"boilerplate/env"
 	"boilerplate/route/middleware"
 	"log/slog"
@@ -21,11 +23,15 @@ func OK() http.Handler {
 	})
 }
 
-func NewRoutes() *http.ServeMux {
+func NewRoutes(db *config.Database) *http.ServeMux {
 	mux := http.NewServeMux()
-	commonMiddlewares := Combine(middleware.RequestContextID, middleware.Logger).Then(OK())
 
-	mux.Handle("/todos", commonMiddlewares)
+	uc := controller.NewUsersHandler(db)
+	commonMiddlewares := Combine(middleware.RequestContextID, middleware.Logger, middleware.Recovery).Then(OK())
+	usersMiddlewares := Combine(middleware.RequestContextID, middleware.Logger, middleware.Recovery).Then(http.HandlerFunc(uc.Users))
+
+	mux.Handle("/ok", commonMiddlewares)
+	mux.Handle("/users/", usersMiddlewares)
 
 	// Index page http server
 	mux.HandleFunc("/", index)

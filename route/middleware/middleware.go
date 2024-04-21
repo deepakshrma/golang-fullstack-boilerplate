@@ -4,6 +4,8 @@ import (
 	"boilerplate/config"
 	"boilerplate/util"
 	"context"
+	"encoding/json"
+	"fmt"
 	"github.com/google/uuid"
 	"log/slog"
 	"net/http"
@@ -55,5 +57,29 @@ func Logger(next http.Handler) http.Handler {
 			ctx.Log.Info("End of request", slog.String("method", r.Method), slog.String("url", r.URL.String()), slog.Int64("time", time.Since(startTime).Milliseconds()))
 		}()
 		next.ServeHTTP(w, r)
+	})
+}
+
+func Recovery(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		ctx := UseContext(r)
+		defer func() {
+			err := recover()
+			if err != nil {
+				ctx.Log.Error("internal server error", slog.String("error", fmt.Sprintf("%v", err)))
+
+				jsonBody, _ := json.Marshal(map[string]string{
+					"error": "There was an internal server error",
+				})
+
+				w.Header().Set("Content-Type", "application/json")
+				w.WriteHeader(http.StatusInternalServerError)
+				w.Write(jsonBody)
+			}
+
+		}()
+
+		next.ServeHTTP(w, r)
+
 	})
 }

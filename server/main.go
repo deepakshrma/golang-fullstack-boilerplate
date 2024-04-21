@@ -23,7 +23,7 @@ func main() {
 	db := config.MemDatabase(config.AppConfiguration)
 	config.Logger.Info("created database connection", "db", db)
 
-	mux := route.NewRoutes()
+	mux := route.NewRoutes(db)
 
 	err := http.ListenAndServe(":8080", mux)
 	if err != nil {
