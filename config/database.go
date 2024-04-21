@@ -9,7 +9,7 @@ func (db *Database) Query(query string) string {
 	return `{"name": "MemDatabase"}`
 }
 
-// Some mock data
+// MemDatabase is some mock database
 func MemDatabase(config *Config) *Database {
 	fmt.Println(config.DBHost)
 	return &Database{}

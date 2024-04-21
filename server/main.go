@@ -3,6 +3,7 @@ package main
 import (
 	"boilerplate/config"
 	"boilerplate/env"
+	"boilerplate/logger"
 	"boilerplate/template"
 	"fmt"
 	"os"
