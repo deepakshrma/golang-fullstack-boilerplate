@@ -3,7 +3,10 @@ package main
 import (
 	"boilerplate/config"
 	"boilerplate/env"
+	"boilerplate/route"
 	"boilerplate/template"
+	"log/slog"
+	"net/http"
 	"os"
 )
 
@@ -19,4 +22,12 @@ func main() {
 	config.Logger.Info("Hello World!")
 	db := config.MemDatabase(config.AppConfiguration)
 	config.Logger.Info("created database connection", "db", db)
+
+	mux := route.NewRoutes()
+
+	err := http.ListenAndServe(":8080", mux)
+	if err != nil {
+		slog.Error("Error starting server", "error", err)
+		os.Exit(1)
+	}
 }
