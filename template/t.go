@@ -1,11 +1,11 @@
 package template
 
 import (
-	"boilerplate/env"
 	"os"
 	"path/filepath"
 	"strings"
 	"text/template"
+	"webapp/pkg/env"
 )
 
 var Templates = map[string]*template.Template{}

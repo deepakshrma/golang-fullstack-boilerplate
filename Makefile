@@ -1,5 +1,5 @@
-MAIN_PACKAGE_PATH := ./server/main.go
-BINARY_NAME := boilerplate
+MAIN_PACKAGE_PATH := ./cmd/server
+BINARY_NAME := server
 
 # ==================================================================================== #
 # HELPERS

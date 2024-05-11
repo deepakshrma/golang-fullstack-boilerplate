@@ -1,9 +1,9 @@
 package config
 
 import (
-	"boilerplate/env"
 	"log/slog"
 	"os"
+	"webapp/pkg/env"
 )
 
 func getLogLevel(logLevel string) slog.Level {
@@ -19,14 +19,12 @@ func getLogLevel(logLevel string) slog.Level {
 	}
 }
 
-var Logger *slog.Logger
-
-func InitLogger() {
+func NewLogger() *slog.Logger {
 	logLevelS := env.GetEnvD("LOG_LEVEL", "info")
 	logLevel := getLogLevel(logLevelS)
 	opts := &slog.HandlerOptions{
 		Level: logLevel,
 	}
 	handler := slog.NewTextHandler(os.Stdout, opts)
-	Logger = slog.New(handler)
+	return slog.New(handler)
 }

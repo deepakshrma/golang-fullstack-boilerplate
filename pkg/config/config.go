@@ -1,14 +1,16 @@
 package config
 
 import (
-	"boilerplate/env"
-	"boilerplate/util"
 	"encoding/json"
+	"fmt"
 	"os"
 	"path/filepath"
+	"webapp/pkg/env"
+	"webapp/pkg/helpers/str"
 )
 
-type Config struct {
+type AppConfig struct {
+	Port      int    `json:"port"`
 	DBHost    string `json:"dbHost"`
 	DBPort    int    `json:"dbPort"`
 	Endpoints []struct {
@@ -17,21 +19,22 @@ type Config struct {
 	} `json:"endpoints"`
 }
 
-var AppConfiguration = &Config{}
-
-func New() *Config {
+func NewAppConfig() (*AppConfig, error) {
 	configFileName := "config.json"
-	if !util.IsStringEmpty(env.AppMode) {
+	if !str.IsStringEmpty(env.AppMode) {
 		configFileName = "config." + env.AppMode + ".json"
-
 	}
 	configFileS, err := os.ReadFile(filepath.Join(env.AppWd, "config", configFileName))
 	if err != nil {
-		Logger.Error("error while loading config file", "file", configFileName, err)
+		return nil, fmt.Errorf("failed to read config file: %w", err)
 	}
-	err = json.Unmarshal(configFileS, AppConfiguration)
+	config := &AppConfig{}
+	err = json.Unmarshal(configFileS, config)
+	if config.Port == 0 {
+		config.Port = 8080
+	}
 	if err != nil {
-		Logger.Error("error while parse config file", "file", configFileName, err)
+		return nil, fmt.Errorf("failed to parse config: %w", err)
 	}
-	return AppConfiguration
+	return config, nil
 }

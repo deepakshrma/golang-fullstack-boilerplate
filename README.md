@@ -20,7 +20,7 @@ This is going to be awesome!!
 
 ## How to create multiple ENV files
 
-Navigate to [env](env) folder and create files pattern application.{APP_MODE}.env
+Navigate to [env](pkg/env) folder and create files pattern application.{APP_MODE}.env
 Here {APP_MODE} is different profile.
 
 ## How to run
@@ -53,9 +53,20 @@ Here {APP_MODE} is different profile.
 ## How to set logger
 
 You can set diff log level using env variable `LOG_LEVEL={debug,info,warn,error}`  in environment
-files[application.env](env/application.env). The default is `LOG_LEVEL=info`.
+files[application.env](application.env). The default is `LOG_LEVEL=info`.
 
 ```properties
 APP_VERSION=1.0.0
 LOG_LEVEL=error
+```
+
+
+### useful docker commands
+
+```
+docker compose stop
+docker compose rm -f
+docker-compose up --build -d 
+docker exec -it 4c0f5f4acb0c /bin/sh 
+
 ```

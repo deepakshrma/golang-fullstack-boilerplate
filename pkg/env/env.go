@@ -1,12 +1,12 @@
 package env
 
 import (
-	"boilerplate/util"
 	"fmt"
 	"log/slog"
 	"os"
 	"path/filepath"
 	"strings"
+	"webapp/pkg/helpers/str"
 )
 
 var AppMode = ""
@@ -14,7 +14,7 @@ var AppWd = "./"
 
 func GetEnvD(key string, def string) string {
 	env := os.Getenv(key)
-	if util.IsStringEmpty(env) {
+	if str.IsStringEmpty(env) {
 		return def
 	}
 	return env
@@ -24,9 +24,9 @@ func LoadEnvs() {
 	env := GetEnvD("APP_MODE", "")
 	AppMode = env
 	AppWd, _ = os.Getwd()
-	envPath := "./env/application.env"
-	if !util.IsStringEmpty(env) {
-		envPath = fmt.Sprintf("./env/application.%s.env", env)
+	envPath := "./.env"
+	if !str.IsStringEmpty(env) {
+		envPath = fmt.Sprintf("./.env.%s", env)
 	}
 	absPath, err := filepath.Abs(envPath)
 	if err != nil {

@@ -3,3 +3,4 @@ coverage
 vendor
 bin
 .idea
+coverage.out
