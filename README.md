@@ -1,6 +1,14 @@
 # golang-fullstack-boilerplate
 
-This is going to be awesome!!
+This repository is a fullstack golang sample project. This repo includes Golang along with postgres database and Lit
+element as UI framework. This is going to be awesome!!
+
+## TODO
+
+- Update readme
+- Unit and integration test along with test architecture
+- singleton
+- Sample Todo working app with test sample.
 
 ## Project Structure
 
@@ -59,7 +67,6 @@ files[application.env](application.env). The default is `LOG_LEVEL=info`.
 APP_VERSION=1.0.0
 LOG_LEVEL=error
 ```
-
 
 ### useful docker commands
 
