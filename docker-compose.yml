@@ -6,12 +6,12 @@ services:
     hostname: postgres-local
     restart: always
     environment:
-      - DATABASE_HOST=${PG_DB_HOST}
-      - POSTGRES_USER=${PG_DB_USER}
-      - POSTGRES_PASSWORD=${PG_DB_PASSWORD}
-      - POSTGRES_DB=${PG_DB_NAME}
+      - DATABASE_HOST=${DB_HOST}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
     ports:
-      - ${PG_DB_LOCAL_PORT}:${PG_DB_DOCKER_PORT}
+      - ${DB_PORT}:${DB_PORT}
     networks:
       - backend
     volumes:
@@ -29,11 +29,11 @@ services:
       - backend
     restart: on-failure
     environment:
-      DB_HOST: ${PG_DB_HOST}
-      DB_PORT: ${PG_DB_DOCKER_PORT}
-      DB_USER: ${PG_DB_USER}
-      DB_PASSWORD: ${PG_DB_PASSWORD}
-      DB_NAME: ${PG_DB_NAME}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
 volumes:
   db:
 

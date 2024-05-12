@@ -1,1 +1,11 @@
-package golang_fullstack_boilerplate
+package main
+
+import (
+	"os"
+	"testing"
+)
+
+func TestMain(m *testing.M) {
+	code := m.Run()
+	os.Exit(code)
+}

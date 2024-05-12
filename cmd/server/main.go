@@ -39,7 +39,6 @@ func init() {
 func main() {
 	app.DSN = fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable timezone=UTC connect_timeout=5",
 		os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_NAME"))
-
 	err := templates.Templates["version.tmpl"].Execute(os.Stdout, os.Getenv("APP_VERSION"))
 	if err != nil {
 		return
