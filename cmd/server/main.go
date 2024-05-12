@@ -7,14 +7,12 @@ import (
 	"net/http"
 	"os"
 	"webapp/pkg/config"
-	"webapp/pkg/env"
 	"webapp/pkg/repository"
 	"webapp/pkg/repository/repo"
 	"webapp/templates"
 )
 
 type application struct {
-	//db  *sql.DB
 	DSN    string
 	db     repository.DatabaseRepo
 	L      *slog.Logger
@@ -24,8 +22,12 @@ type application struct {
 var app application
 
 func init() {
-	env.LoadEnvs()
+	config.LoadEnvs()
 	app.L = config.NewLogger()
+
+	// Set default as Log
+	slog.SetDefault(app.L)
+
 	templates.LoadTemplates()
 	cnf, err := config.NewAppConfig()
 	if err != nil {
@@ -46,11 +48,10 @@ func main() {
 	app.L.Info("Hello World!")
 	db, err := app.connectToDB()
 	if err != nil {
-		slog.Error("Error connecting to DB", err)
+		log.Fatal("Error connecting to DB", err)
 	}
-	app.L.Info("created database connection")
-
 	app.db = &repo.PostgresDBRepo{DB: db}
+
 	mux := app.routes()
 	app.L.Info("server is running", "port", app.config.Port)
 	err = http.ListenAndServe(fmt.Sprintf(":%d", app.config.Port), mux)

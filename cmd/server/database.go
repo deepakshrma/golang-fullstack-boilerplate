@@ -2,8 +2,6 @@ package main
 
 import (
 	"database/sql"
-	"log"
-
 	_ "github.com/lib/pq"
 )
 
@@ -26,8 +24,6 @@ func (app *application) connectToDB() (*sql.DB, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	log.Println("Connected to Postgres!")
-
+	app.L.Info("Connected to Postgres!")
 	return connection, nil
 }

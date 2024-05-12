@@ -3,7 +3,6 @@ package repo
 import (
 	"context"
 	"database/sql"
-	"log"
 	"time"
 	"webapp/pkg/model"
 )
@@ -46,7 +45,6 @@ func (m *PostgresDBRepo) AllUsers() ([]*model.User, error) {
 			&user.UpdatedAt,
 		)
 		if err != nil {
-			log.Println("Error scanning", err)
 			return nil, err
 		}
 

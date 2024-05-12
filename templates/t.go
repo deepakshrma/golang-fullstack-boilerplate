@@ -5,13 +5,13 @@ import (
 	"path/filepath"
 	"strings"
 	"text/template"
-	"webapp/pkg/env"
+	"webapp/pkg/config"
 )
 
 var Templates = map[string]*template.Template{}
 
 func LoadTemplates() {
-	templatesPath := filepath.Join(env.AppWd, "templates")
+	templatesPath := filepath.Join(config.AppWd, "templates")
 	files, _ := os.ReadDir(templatesPath)
 	for _, file := range files {
 		if file.IsDir() && strings.HasSuffix(file.Name(), ".tmpl") {

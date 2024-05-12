@@ -3,11 +3,11 @@ package config
 import (
 	"log/slog"
 	"os"
-	"webapp/pkg/env"
+	"strings"
 )
 
 func getLogLevel(logLevel string) slog.Level {
-	switch logLevel {
+	switch strings.ToLower(logLevel) {
 	case "info":
 		return slog.LevelInfo
 	case "warn":
@@ -20,7 +20,7 @@ func getLogLevel(logLevel string) slog.Level {
 }
 
 func NewLogger() *slog.Logger {
-	logLevelS := env.GetEnvD("LOG_LEVEL", "info")
+	logLevelS := GetEnvD("LOG_LEVEL", "info")
 	logLevel := getLogLevel(logLevelS)
 	opts := &slog.HandlerOptions{
 		Level: logLevel,

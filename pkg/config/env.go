@@ -1,4 +1,4 @@
-package env
+package config
 
 import (
 	"fmt"
@@ -31,21 +31,25 @@ func LoadEnvs() {
 	absPath, err := filepath.Abs(envPath)
 	if err != nil {
 		slog.Error("unable to find " + envPath)
+		return
 	}
 
 	envFile, err := os.ReadFile(absPath)
 	if err != nil {
 		slog.Error("unable to load " + absPath)
+		return
 	}
 	for _, line := range strings.Split(strings.TrimSpace(string(envFile)), "\n") {
+		if strings.HasPrefix(line, "#") {
+			continue
+		}
 		params := strings.Split(line, "=")
 		key := strings.TrimSpace(params[0])
 		if key == "" {
 			continue
 		}
 		val := strings.TrimSpace(params[1])
-		err := os.Setenv(key, val)
-		if err != nil {
+		if err := os.Setenv(key, val); err != nil {
 			slog.Warn("unable to set env ", "key", key)
 		}
 	}

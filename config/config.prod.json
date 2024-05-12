@@ -1,5 +1,3 @@
 {
-  "dbHost": "someprodhost",
-  "dbPort": 3306,
   "endpoints": [{ "url": "produrl", "authType": "authprodType" }]
 }

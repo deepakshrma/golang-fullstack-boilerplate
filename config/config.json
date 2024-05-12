@@ -1,5 +1,3 @@
 {
-  "dbHost": "somehost",
-  "dbPort": 3306,
   "endpoints": [{ "url": "url", "authType": "authType" }]
 }

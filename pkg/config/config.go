@@ -5,14 +5,11 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"webapp/pkg/env"
 	"webapp/pkg/helpers/str"
 )
 
 type AppConfig struct {
-	Port      int    `json:"port"`
-	DBHost    string `json:"dbHost"`
-	DBPort    int    `json:"dbPort"`
+	Port      int `json:"port"`
 	Endpoints []struct {
 		URL      string `json:"url"`
 		AuthType string `json:"authType"`
@@ -21,10 +18,10 @@ type AppConfig struct {
 
 func NewAppConfig() (*AppConfig, error) {
 	configFileName := "config.json"
-	if !str.IsStringEmpty(env.AppMode) {
-		configFileName = "config." + env.AppMode + ".json"
+	if !str.IsStringEmpty(AppMode) {
+		configFileName = "config." + AppMode + ".json"
 	}
-	configFileS, err := os.ReadFile(filepath.Join(env.AppWd, "config", configFileName))
+	configFileS, err := os.ReadFile(filepath.Join(AppWd, "config", configFileName))
 	if err != nil {
 		return nil, fmt.Errorf("failed to read config file: %w", err)
 	}
