@@ -10,7 +10,7 @@ import (
 	"webapp/pkg/env"
 	"webapp/pkg/repository"
 	"webapp/pkg/repository/repo"
-	"webapp/template"
+	"webapp/templates"
 )
 
 type application struct {
@@ -26,7 +26,7 @@ var app application
 func init() {
 	env.LoadEnvs()
 	app.L = config.NewLogger()
-	template.LoadTemplates()
+	templates.LoadTemplates()
 	cnf, err := config.NewAppConfig()
 	if err != nil {
 		log.Fatal(err)
@@ -38,7 +38,7 @@ func main() {
 	app.DSN = fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable timezone=UTC connect_timeout=5",
 		os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_NAME"))
 
-	err := template.Templates["version.tmpl"].Execute(os.Stdout, os.Getenv("APP_VERSION"))
+	err := templates.Templates["version.tmpl"].Execute(os.Stdout, os.Getenv("APP_VERSION"))
 	if err != nil {
 		return
 	}

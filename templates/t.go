@@ -1,4 +1,4 @@
-package template
+package templates
 
 import (
 	"os"
@@ -11,7 +11,7 @@ import (
 var Templates = map[string]*template.Template{}
 
 func LoadTemplates() {
-	templatesPath := filepath.Join(env.AppWd, "template")
+	templatesPath := filepath.Join(env.AppWd, "templates")
 	files, _ := os.ReadDir(templatesPath)
 	for _, file := range files {
 		if file.IsDir() && strings.HasSuffix(file.Name(), ".tmpl") {
