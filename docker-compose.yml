@@ -1,36 +1,43 @@
 services:
   db:
-    container_name: app-postgres
-    image: postgres:14.1-alpine
+    container_name: postgres
+    image: 'postgres:14.5-alpine'
+    ## hack to enable network using direct hostname
+    hostname: postgres-local
     restart: always
     environment:
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-      - POSTGRES_DB=${DB_NAME}
-      - DATABASE_HOST=${DB_HOST}
+      - DATABASE_HOST=${PG_DB_HOST}
+      - POSTGRES_USER=${PG_DB_USER}
+      - POSTGRES_PASSWORD=${PG_DB_PASSWORD}
+      - POSTGRES_DB=${PG_DB_NAME}
     ports:
-      - "5432:5432"
+      - ${PG_DB_LOCAL_PORT}:${PG_DB_DOCKER_PORT}
+    networks:
+      - backend
     volumes:
       - db:/var/lib/postgresql/data
       - ./sql/init.sql:/docker-entrypoint-initdb.d/create_tables.sql
-  api:
-    container_name: app-api
+  app:
+    container_name: todo-api
     build: .
-    image: app-api
+    image: todo-api
     depends_on:
       - db
     ports:
       - "8080:8080"
+    networks:
+      - backend
     restart: on-failure
     environment:
-      DB_HOST: ${DB_HOST}
-      DB_PORT: ${DB_PORT}
-      DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
-      DB_NAME: ${DB_NAME}
-    volumes:
-      - './:/app/api'
-
+      DB_HOST: ${PG_DB_HOST}
+      DB_PORT: ${PG_DB_DOCKER_PORT}
+      DB_USER: ${PG_DB_USER}
+      DB_PASSWORD: ${PG_DB_PASSWORD}
+      DB_NAME: ${PG_DB_NAME}
 volumes:
   db:
-    driver: local
+
+networks:
+  backend:
+    name: backend-network
+    driver: bridge

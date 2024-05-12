@@ -8,5 +8,7 @@ RUN go mod download
 RUN go mod verify
 RUN CGO_ENABLED=0 GOOS=linux go build -o main ./cmd/server
 
+RUN ls
+
 EXPOSE 8080
 CMD ["/app/main"]

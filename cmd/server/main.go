@@ -48,7 +48,7 @@ func main() {
 	app.L.Info("Hello World!")
 	db, err := app.connectToDB()
 	if err != nil {
-		log.Fatal("Error connecting to DB", err)
+		log.Fatal("Error connecting to DB", "error", err)
 	}
 	app.db = &repo.PostgresDBRepo{DB: db}
 
