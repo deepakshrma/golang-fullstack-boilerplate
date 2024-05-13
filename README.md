@@ -12,40 +12,47 @@ element as UI framework. This is going to be awesome!!
 
 ## Project Structure
 
-```
-|   cmd         :=  Common commands, CLI Executables
-|   config      :=  App configurations
-|   controller  :=
-|   env         :=  System environment configurations
-|   route       :=
-|   server      :=
-|   service     :=
-|   template    :=  App templates
-|   ui          :=
-|   util        :=  App utilities
+![dir.png](docs/dir.png)
 
-```
+- [cmd](cmd) : Common commands, CLI Executables
+- [cmd/server](cmd/server): App Server entry-point
+- [config](config) : App configurations based on AppMode
+- [docs](docs): Docs related files
+- [pkg/config](pkg/config): Common Application Config module
+- [pkg/helpers](pkg/helpers): Common helpers
+- [pkg/middleware](pkg/middleware): Middleware for Http servers
+- [pkg/model](pkg/model): Database/Json entities
+- [pkg/repository](pkg/repository): Database repositories
+- [sql](sql): SQL init scripts
+- [templates](templates): Application templates
+- [ui](ui): UI static files
 
 ## How to create multiple ENV files
 
 Navigate to [env](pkg/env) folder and create files pattern application.{APP_MODE}.env
 Here {APP_MODE} is different profile.
 
+## Setup docker
+
+```bash
+docker compose up
+```
+
 ## How to run
 
 1. Local
 
     ```bash
-    go run server/main.go
+    go run ./cmd/server
     ```
 
 2. Prod other env
 
     ```bash
-    APP_MODE={env} go run server/main.go
+    APP_MODE={env} go run ./cmd/server
     
     ## Example prod
-    APP_MODE=prod go run server/main.go
+    APP_MODE=prod go run ./cmd/server
     ```
 
 3. Using `make` command
@@ -68,12 +75,19 @@ APP_VERSION=1.0.0
 LOG_LEVEL=error
 ```
 
-### useful docker commands
+## Setup postgres database
+To  run application, You need to run postgres database. You can easily do that using postgres
 
+```bash
+docker-compose up --build -d 
 ```
+
+## Useful docker command
+
+```bash
+docker-compose up --build -d 
+
 docker compose stop
 docker compose rm -f
-docker-compose up --build -d 
 docker exec -it 4c0f5f4acb0c /bin/sh 
-
 ```

@@ -27,6 +27,9 @@ func (app *application) routes() *chi.Mux {
 	r.Route("/api/users", func(r chi.Router) {
 		r.Get("/", app.allUsers)
 	})
+	r.Route("/api/todos", func(r chi.Router) {
+		r.Get("/", app.allTodos)
+	})
 
 	return r
 }

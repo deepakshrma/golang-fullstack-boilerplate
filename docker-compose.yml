@@ -15,8 +15,8 @@ services:
     networks:
       - backend
     volumes:
-      - db:/var/lib/postgresql/data
-      - ./sql/init.sql:/docker-entrypoint-initdb.d/create_tables.sql
+      - pg_data:/var/lib/postgresql/data
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
   app:
     container_name: todo-api
     build: .
@@ -35,7 +35,7 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: ${DB_NAME}
 volumes:
-  db:
+  pg_data:
 
 networks:
   backend:

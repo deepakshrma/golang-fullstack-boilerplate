@@ -8,4 +8,5 @@ import (
 type DatabaseRepo interface {
 	Connection() *sql.DB
 	AllUsers() ([]*model.User, error)
+	AllTodos() ([]*model.Todo, error)
 }

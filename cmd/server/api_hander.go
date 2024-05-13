@@ -13,6 +13,15 @@ func (app *application) allUsers(w http.ResponseWriter, r *http.Request) {
 
 	_ = app.writeJSON(w, http.StatusOK, users)
 }
+func (app *application) allTodos(w http.ResponseWriter, r *http.Request) {
+	todos, err := app.db.AllTodos()
+	if err != nil {
+		app.errorJSON(w, err, http.StatusBadRequest)
+		return
+	}
+
+	_ = app.writeJSON(w, http.StatusOK, todos)
+}
 
 func (app *application) getUser(w http.ResponseWriter, r *http.Request) {
 	//userID, err := strconv.Atoi(chi.URLParam(r, "userID"))
